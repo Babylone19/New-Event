@@ -1,0 +1,33 @@
+DB::table('users')->insert([
+    'email' => 'kayla@example.com',
+    'lastname' => 'job',
+    'firstname'=>'BOBLY',
+    'contact'=>'90909090',
+    'status'=>'User',
+    'password'=>'1234'
+]);
+
+
+DB::table('users')->insert([
+    'email' => 'henry@example.com',
+    'lastname' => 'henry',
+    'firstname'=>'POTTER',
+    'contact'=>'90909045',
+    'status'=>'User',
+    'password'=>'1234'
+]);
+
+
+
+DB::insert('insert into users (firstname,lastname,email,contact,status,password) values (?, ?,?,?,?,?)', ['sena', 'Marc','sena@example.com','90586545','Admin','1456']);
+DB::table('users')->insert([
+    'email' => 'john@example.com',
+    'lastname' => 'john',
+    'firstname'=>'LINE',
+    'contact'=>'90909005',
+    'status'=>'User',
+    'password'=>'1234'
+]);
+
+
+DB::select('select * from users');
