@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string("country");
             $table->string("city");
             $table->text("address");
-            $table->integer("user_id")->references("id")->on("users");
+            $table->string("neighborhood");
+            $table->integer("user_id");
+            $table->foreign("user_id")->references("id")->on("users");
             $table->timestamps();
         });
     }

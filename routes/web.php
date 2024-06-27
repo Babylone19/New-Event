@@ -1,49 +1,38 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-Route::get('/', function () {
-    // return view('welcome');
-    return "Hello world ......";
-});
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EntrepriseController;
 
 Route::get('/', function () {
-    // return view('welcome');
-    return "Hello world 2......";
+    return view('welcome');
 });
 
-// Route::get('/etudians', function (Request $request) {
-//     // dump($request);
-//     $name=$request->input("name","ALI") ;
-//     $age=$request->age ?? "aucune âge";
-//     return "Etudiants $name âgé de  $age ans";
-// });
-//     //return view('welcome');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::get('/etudians/{id}/{name}', function (int $id,string $name) {
+require __DIR__.'/auth.php';
 
-        return "Etudiants  N° $id .......... $name";
-    })->where(['id'=>'[0-9]+','name'=>'[a-zA-Z]+']);
+Route::middleware('auth')->group(function () {
+    Route::get("/users", [UserController::class,'users']);
+    Route::get("/",[HomeController::class,'show_welcome'])->name("welcome");
+    Route::get("/about",[HomeController::class,'show_about'])->name("about");
+    Route::get("/contact",[HomeController::class,'show_contact'])->name("contact");
 
-
-Route::get('/users',function(){
-
-    // DB::table('users')->insert(
-
-    //     ["firstname"=>'TÉOURI',
-    //     "lastname"=>'Sabirou',
-    //     'email'=>'sabirou.teouri@ifnti.com',
-    //     'password'=>"ifnti123",
-    //     'status'=>'Admin',
-    //     'contact'=>'90901814'
-    //     ]
-    // );
-
-      $users=  DB::table('users')->get()->first();
-      $users=  DB::table('users')->first();
-      dump($users);
-
-    return "Listes of  users :";
+    Route::get("/entreprises",[EntrepriseController::class,"index"])->name("entreprises.index");
+    Route::get("/entreprises/create",[EntrepriseController::class,"create"])->name("entreprises.create");
+    Route::post("/entreprises",[EntrepriseController::class,"store"])->name("entreprises.store");
+    Route::get("/entreprises/{entrprise}",[EntrepriseController::class,"show"])->name("entreprises.show");
+    Route::get("/entreprises/{entreprise}/edit",[EntrepriseController::class,"edit"])->name("entreprises.edit");
+    Route::put("/entreprises/{entreprise}",[EntrepriseController::class,"update"])->name("entreprises.update");
+    Route::delete("/entreprises/{entreprise}",[EntrepriseController::class,"destroy"])->name("entreprises.destroy");
 });

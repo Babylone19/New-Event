@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string("date");
             $table->string("beginning_hour");
             $table->string("end_time");
-            $table->integer("user_id")->references("id")->on("users");
+            $table->integer("user_id");
+            $table->foreign("user_id")->references("id")->on("users");
             $table->timestamps();
         });
     }

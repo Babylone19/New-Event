@@ -17,8 +17,10 @@ return new class extends Migration
             $table->integer("price");
             $table->integer("number_place");
             $table->string("type");
-            $table->integer("event_id")->references("id")->on("evenement");
-            $table->integer("template_id")->references("id")->on("template");
+            $table->integer("event_id");
+            $table->foreign("event_id")->references("id")->on("evenement");
+            $table->integer("template_id");
+            $table->foreign("template_id")->references("id")->on("template");
             $table->timestamps();
         });
     }

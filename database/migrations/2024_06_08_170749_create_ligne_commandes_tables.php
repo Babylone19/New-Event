@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('ligne_commandes', function (Blueprint $table) {
             $table->id();
             $table->integer("quantity");
-            $table->integer("ticker_id")->references("id")->on("ticket");
-            $table->integer("order_id")->references("id")->on("commande");
+            $table->integer("ticker_id");
+            $table->foreign("ticker_id")->references("id")->on("ticket");
+            $table->integer("order_id");
+            $table->foreign("order_id")->references("id")->on("commande");
             $table->timestamps();
         });
     }
